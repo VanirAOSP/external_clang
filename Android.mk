@@ -3,6 +3,8 @@ CLANG_ROOT_PATH := $(LOCAL_PATH)
 
 include $(CLEAR_VARS)
 
+ifneq ($(TARGET_ENABLE_PREBUILT_CLANG),true)
+
 subdirs := $(addprefix $(LOCAL_PATH)/,$(addsuffix /Android.mk, \
   lib/Analysis \
   lib/AST \
@@ -31,3 +33,5 @@ include $(LOCAL_PATH)/clang.mk
 include $(LOCAL_PATH)/host_shared_clang.mk
 
 include $(subdirs)
+
+endif
