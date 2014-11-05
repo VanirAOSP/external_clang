@@ -539,31 +539,34 @@ static void getARMFPUFeatures(const Driver &D, const Arg *A,
   // Set the target features based on the FPU.
   if (FPU == "fpa" || FPU == "fpe2" || FPU == "fpe3" || FPU == "maverick") {
     // Disable any default FPU support.
-    Features.push_back("-vfp2");
-    Features.push_back("-vfp3");
-    Features.push_back("-neon");
+    CmdArgs.push_back("-target-feature");
+    CmdArgs.push_back("-vfp2");
+    CmdArgs.push_back("-target-feature");
+    CmdArgs.push_back("-vfp3");
+    CmdArgs.push_back("-target-feature");
+    CmdArgs.push_back("-neon");
+  } else if (FPU == "vfp3-d16" || FPU == "vfpv3-d16" || FPU == "vfp4-d16" || FPU == "vfpv4-d16") {
+    CmdArgs.push_back("-target-feature");
+    CmdArgs.push_back("+vfp3");
+    CmdArgs.push_back("-target-feature");
+    CmdArgs.push_back("+d16");
+    CmdArgs.push_back("-target-feature");
+    CmdArgs.push_back("-neon");
   } else if (FPU == "vfp") {
-    Features.push_back("+vfp2");
-    Features.push_back("-neon");
-  } else if (FPU == "vfp3-d16" || FPU == "vfpv3-d16") {
-    Features.push_back("+vfp3");
-    Features.push_back("+d16");
-    Features.push_back("-neon");
-  } else if (FPU == "vfp3" || FPU == "vfpv3") {
-    Features.push_back("+vfp3");
-    Features.push_back("-neon");
-  } else if (FPU == "vfp4-d16" || FPU == "vfpv4-d16") {
-    Features.push_back("+vfp4");
-    Features.push_back("+d16");
-    Features.push_back("-neon");
-  } else if (FPU == "vfp4" || FPU == "vfpv4") {
-    Features.push_back("+vfp4");
-    Features.push_back("-neon");
-  } else if (FPU == "fp4-sp-d16" || FPU == "fpv4-sp-d16") {
-    Features.push_back("+vfp4");
-    Features.push_back("+d16");
-    Features.push_back("+fp-only-sp");
-    Features.push_back("-neon");
+    CmdArgs.push_back("-target-feature");
+    CmdArgs.push_back("+vfp2");
+    CmdArgs.push_back("-target-feature");
+    CmdArgs.push_back("-neon");
+  } else if (FPU == "vfp3" || FPU == "vfpv3" || FPU == "vfp4" || FPU == "vfpv4") {
+    CmdArgs.push_back("-target-feature");
+    CmdArgs.push_back("+vfp3");
+    CmdArgs.push_back("-target-feature");
+    CmdArgs.push_back("-neon");
+  } else if (FPU == "neon-vfp3" || FPU == "neon-vfp4" || FPU == "neon-vfpv3" || FPU == "neon-vfpv4") {
+    CmdArgs.push_back("-target-feature");
+    CmdArgs.push_back("+vfp3");
+    CmdArgs.push_back("-target-feature");
+    CmdArgs.push_back("+neon");
   } else if (FPU == "fp-armv8") {
     Features.push_back("+fp-armv8");
     Features.push_back("-neon");
